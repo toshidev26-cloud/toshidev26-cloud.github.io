@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+
+  <!--
+    ===============================================================
+    100% OFFLINE / SELF-CONTAINED
+    - No CDN, no external requests at runtime.
+    - Fonts: system stack (Space Grotesk used if installed locally).
+    - Icons: inline SVG sprite (see <svg id="icon-sprite"> below).
+    - Images: CSS / inline-SVG placeholders (no remote images).
+    Opening this file with no internet works perfectly.
+    ===============================================================
+  -->
+
+  <!-- ============================================================= -->
+  <!--  EDIT META: title + description (browser tab + search/social) -->
+  <!-- ============================================================= -->
+  <title>Edwin Ranoco (Toshi) — Full-Stack Developer & UX/UI Designer</title>
+  <meta name="description" content="Edwin Ranoco aka Toshi — Full-Stack Developer & UX/UI Designer crafting clean, intuitive, motion-rich digital experiences." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- ===== Open Graph (LinkedIn / Facebook link previews) ===== -->
+  <!-- NOTE: og:url and og:image MUST be absolute https URLs for LinkedIn's
+       crawler to render them. Replace USERNAME with your GitHub username,
+       and drop a 1200x630 image named og-cover.png next to this file. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Edwin Ranoco — Portfolio" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Edwin Ranoco (Toshi) — Full-Stack Developer & UX/UI Designer" />
+  <meta property="og:description" content="I build things people love to use — clean, intuitive interfaces with a love for motion and detail." />
+  <meta property="og:url" content="https://USERNAME.github.io/" />
+  <meta property="og:image" content="https://USERNAME.github.io/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Edwin Ranoco (Toshi) — Full-Stack Developer & UX/UI Designer" />
+
+  <!-- ===== Twitter / X card (same image) ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Edwin Ranoco (Toshi) — Full-Stack Developer & UX/UI Designer" />
+  <meta name="twitter:description" content="I build things people love to use — clean, intuitive interfaces with a love for motion and detail." />
+  <meta name="twitter:image" content="https://USERNAME.github.io/og-cover.png" />
+
+  <!-- ===== Emoji favicon (inline SVG, works offline) =====
+       To change the icon, swap the ⚡ below for any emoji (🎨 🚀 👾 ✦). -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E⚡%3C/text%3E%3C/svg%3E" />
+
+  <style>
+    /* ============================================================= */
+    /*  DESIGN TOKENS                                                 */
+    /* ============================================================= */
+    :root {
+      /* Palette */
+      --bg:        #0a0a0a;
+      --bg-soft:   #0e0e11;
+      --surface:   rgba(255, 255, 255, 0.035);
+      --surface-2: rgba(255, 255, 255, 0.06);
+      --border:    rgba(255, 255, 255, 0.09);
+      --border-2:  rgba(255, 255, 255, 0.14);
+
+      --text:      #f4f4f5;
+      --muted:     #a1a1aa;
+      --muted-2:   #6b6b73;
+
+      --blue:      #4f8ef7;
+      --violet:    #7c3aed;
+      --accent-grad: linear-gradient(120deg, #4f8ef7 0%, #7c3aed 100%);
+
+      /* Typography — system stack (Space Grotesk / Inter used if installed
+         locally). To bundle the exact fonts offline, drop the .woff2 files
+         next to this file and uncomment the @font-face block below. */
+      --font-head: 'Space Grotesk', ui-sans-serif, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+      /* Layout */
+      --container: 1180px;
+      --pad-x: clamp(1.25rem, 5vw, 4rem);
+      --radius: 20px;
+      --radius-sm: 12px;
+
+      /* Motion */
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ---- OPTIONAL: bundle exact fonts for offline use ----
+    @font-face {
+      font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700;
+      font-display: swap; src: url('./SpaceGrotesk.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter'; font-style: normal; font-weight: 300 600;
+      font-display: swap; src: url('./Inter.woff2') format('woff2');
+    }
+    -------------------------------------------------------- */
+
+    /* ============================================================= */
+    /*  RESET / BASE                                                 */
+    /* ============================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      scroll-padding-top: 90px; /* offset for sticky nav on anchor jumps */
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Hide default cursor only on precise pointers (desktop) */
+    @media (hover: hover) and (pointer: fine) {
+      body.custom-cursor-on,
+      body.custom-cursor-on a,
+      body.custom-cursor-on button { cursor: none; }
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    ::selection { background: rgba(124, 58, 237, 0.45); color: #fff; }
+
+    h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+    p { text-wrap: pretty; }
+
+    /* Keyboard focus ring (accessibility polish) */
+    :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+    :focus:not(:focus-visible) { outline: none; }
+
+    /* Refined page scrollbar */
+    html { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.16) transparent; }
+    ::-webkit-scrollbar { width: 11px; height: 11px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.13); border-radius: 99px; border: 3px solid var(--bg); }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.24); }
+
+    .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--pad-x); }
+
+    .accent-text {
+      background: var(--accent-grad);
+      background-size: 220% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      animation: shimmer 7s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 220% center; } }
+
+    /* ---- Inline SVG icon system ---- */
+    .ic {
+      width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em;
+      fill: none; stroke: currentColor; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round; flex: none; pointer-events: none;
+    }
+    .ic-brand { fill: currentColor; stroke: none; } /* solid brand glyphs */
+
+    /* ============================================================= */
+    /*  FIXED OVERLAYS: grain + custom cursor + scroll progress      */
+    /* ============================================================= */
+
+    /* Film-grain / noise texture for depth (inline SVG, offline) */
+    .grain {
+      position: fixed; inset: -50%; z-index: 9998;
+      pointer-events: none;
+      opacity: 0.05;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: grainShift 8s steps(6) infinite;
+    }
+    @keyframes grainShift {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(-3%, 2%); }
+      40%  { transform: translate(2%, -3%); }
+      60%  { transform: translate(-2%, -2%); }
+      80%  { transform: translate(3%, 2%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Custom glowing cursor (desktop only — toggled via JS) */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      pointer-events: none; border-radius: 50%;
+      transform: translate(-50%, -50%);
+      will-change: transform; mix-blend-mode: difference;
+    }
+    .cursor-dot { width: 7px; height: 7px; background: #fff; }
+    .cursor-ring {
+      width: 38px; height: 38px;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      transition: width .25s var(--ease), height .25s var(--ease),
+                  background .25s var(--ease), border-color .25s var(--ease);
+    }
+    .cursor-ring.is-hover {
+      width: 62px; height: 62px;
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    /* Top scroll-progress bar */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+      transform: scaleX(0); transform-origin: 0 50%;
+      background: var(--accent-grad); z-index: 1000;
+      box-shadow: 0 0 12px rgba(79,142,247,0.6);
+    }
+
+    /* ============================================================= */
+    /*  NAVBAR                                                       */
+    /* ============================================================= */
+    .nav {
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.15rem var(--pad-x);
+      transition: padding .4s var(--ease), background .4s var(--ease),
+                  border-color .4s var(--ease), backdrop-filter .4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      padding-block: 0.8rem;
+      background: rgba(10,10,10,0.55);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__logo {
+      font-family: var(--font-head); font-weight: 700; font-size: 1.15rem;
+      letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: .55rem;
+    }
+    .nav__logo .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-grad); box-shadow: 0 0 10px var(--blue); }
+    .nav__links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav__links a {
+      font-size: 0.9rem; color: var(--muted); font-weight: 500;
+      position: relative; transition: color .3s var(--ease);
+    }
+    .nav__links a::after {
+      content: ''; position: absolute; left: 0; bottom: -5px; height: 1.5px; width: 0;
+      background: var(--accent-grad); transition: width .3s var(--ease);
+    }
+    .nav__links a:hover, .nav__links a.active { color: var(--text); }
+    .nav__links a:hover::after, .nav__links a.active::after { width: 100%; }
+
+    .nav__cta {
+      font-size: 0.85rem; font-weight: 600; padding: 0.6rem 1.1rem;
+      border-radius: 999px; border: 1px solid var(--border-2);
+      background: var(--surface); color: var(--text);
+      transition: background .3s var(--ease), border-color .3s var(--ease), transform .2s var(--ease);
+    }
+    .nav__cta:hover { background: var(--surface-2); border-color: var(--blue); }
+
+    .nav__burger { display: none; font-size: 1.3rem; color: var(--text); z-index: 950; }
+
+    /* Mobile fullscreen menu */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 940;
+      background: rgba(8,8,9,0.92);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.5rem; opacity: 0; visibility: hidden;
+      transition: opacity .4s var(--ease), visibility .4s var(--ease);
+    }
+    .mobile-menu.open { opacity: 1; visibility: visible; }
+    .mobile-menu a {
+      font-family: var(--font-head); font-size: 2rem; font-weight: 500;
+      color: var(--muted); transition: color .3s var(--ease), transform .3s var(--ease);
+    }
+    .mobile-menu a:hover { color: var(--text); transform: translateX(6px); }
+
+    /* ============================================================= */
+    /*  SHARED SECTION SCAFFOLDING                                   */
+    /* ============================================================= */
+    section { position: relative; padding-block: clamp(5rem, 12vw, 9rem); }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--font-head); font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue);
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before { content: ''; width: 26px; height: 1px; background: var(--accent-grad); }
+    .section-title { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 600; max-width: 16ch; }
+    .section-intro { color: var(--muted); max-width: 52ch; margin-top: 1rem; font-size: 1.02rem; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      font-weight: 600; font-size: 0.95rem; padding: 0.95rem 1.7rem; border-radius: 999px;
+      position: relative; transition: transform .25s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
+      will-change: transform;
+    }
+    .btn--primary { background: var(--accent-grad); color: #fff; box-shadow: 0 10px 30px -10px rgba(79,142,247,0.65); overflow: hidden; }
+    .btn--primary:hover { box-shadow: 0 14px 40px -8px rgba(124,58,237,0.75); }
+    /* glossy sweep on hover */
+    .btn--primary::before {
+      content: ''; position: absolute; top: 0; left: -160%; width: 55%; height: 100%;
+      background: linear-gradient(110deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg); transition: left .65s var(--ease);
+    }
+    .btn--primary:hover::before { left: 170%; }
+    .btn--ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border-2); }
+    .btn--ghost:hover { border-color: var(--blue); background: var(--surface-2); }
+    .btn .ic { transition: transform .25s var(--ease); }
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    /* ============================================================= */
+    /*  HERO                                                         */
+    /* ============================================================= */
+    .hero {
+      min-height: 100svh; display: flex; align-items: center;
+      position: relative; overflow: hidden; padding-top: 6rem;
+    }
+    .hero__canvas { position: absolute; inset: 0; z-index: 0; }
+    /* blend the hero into the page below */
+    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 34%; z-index: 1; pointer-events: none; background: linear-gradient(transparent, var(--bg)); }
+
+    /* Animated aurora blobs (CSS, GPU-cheap) */
+    .aurora { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .aurora span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; will-change: transform; }
+    .aurora .b1 { width: 46vw; height: 46vw; top: -12%; left: -8%; background: radial-gradient(circle, #4f8ef7, transparent 65%); animation: drift1 18s ease-in-out infinite; }
+    .aurora .b2 { width: 40vw; height: 40vw; bottom: -16%; right: -6%; background: radial-gradient(circle, #7c3aed, transparent 65%); animation: drift2 22s ease-in-out infinite; }
+    .aurora .b3 { width: 28vw; height: 28vw; top: 35%; left: 45%; background: radial-gradient(circle, #4f8ef7, transparent 70%); opacity: 0.28; animation: drift3 26s ease-in-out infinite; }
+    @keyframes drift1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(8%,10%) scale(1.12)} }
+    @keyframes drift2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-9%,-7%) scale(1.1)} }
+    @keyframes drift3 { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-42%,-58%) scale(1.2)} }
+
+    /* faint grid lines for that "futuristic" tech feel */
+    .hero__grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    }
+
+    .hero__inner { position: relative; z-index: 2; max-width: 60rem; }
+    .hero__eyebrow {
+      display: inline-flex; align-items: center; gap: .65rem;
+      font-size: 0.85rem; color: var(--muted); font-weight: 500;
+      padding: .5rem 1rem; border: 1px solid var(--border); border-radius: 999px;
+      background: var(--surface); margin-bottom: 1.8rem; backdrop-filter: blur(8px);
+    }
+    .hero__eyebrow .pulse { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 rgba(34,197,94,0.6); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5)} 70%{box-shadow:0 0 0 8px rgba(34,197,94,0)} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0)} }
+
+    .hero h1 {
+      font-size: clamp(2.9rem, 11vw, 8rem); font-weight: 700; line-height: 0.95;
+      letter-spacing: -0.03em; margin-bottom: 1.2rem;
+    }
+    .hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+    .hero h1 .line > span { display: block; transform: translateY(115%); animation: lineRise 0.95s var(--ease-out) forwards; }
+    .hero h1 .line:nth-child(1) > span { animation-delay: 0.12s; }
+    .hero h1 .line:nth-child(2) > span { animation-delay: 0.26s; }
+    @keyframes lineRise { to { transform: translateY(0); } }
+
+    .hero__role {
+      font-family: var(--font-head); font-size: clamp(1.3rem, 4vw, 2.4rem);
+      font-weight: 500; color: var(--muted); margin-bottom: 1.6rem; min-height: 1.2em;
+    }
+    .hero__role .tw { color: var(--text); }
+    .hero__role .caret {
+      display: inline-block; width: 3px; height: 1em; vertical-align: -0.12em;
+      margin-left: 4px; background: var(--blue); animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero__desc { font-size: 1.1rem; color: var(--muted); max-width: 46ch; margin-bottom: 2.4rem; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+    .scroll-cue {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: .6rem;
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-2);
+    }
+    .scroll-cue .mouse {
+      width: 22px; height: 36px; border: 1.5px solid var(--border-2); border-radius: 12px;
+      display: flex; justify-content: center; padding-top: 6px;
+    }
+    .scroll-cue .mouse::before { content:''; width: 3px; height: 7px; border-radius: 2px; background: var(--blue); animation: wheel 1.6s ease-in-out infinite; }
+    @keyframes wheel { 0%{opacity:0; transform:translateY(-4px)} 40%{opacity:1} 100%{opacity:0; transform:translateY(8px)} }
+
+    /* ============================================================= */
+    /*  ABOUT                                                        */
+    /* ============================================================= */
+    .about__grid {
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 6vw, 5rem);
+      align-items: center; margin-top: 3rem;
+    }
+    .about__body p { color: var(--muted); font-size: 1.08rem; margin-bottom: 1.2rem; max-width: 50ch; }
+    .about__body p strong { color: var(--text); font-weight: 600; }
+
+    .funfact {
+      margin-top: 2rem; padding: 1.1rem 1.3rem; border-radius: var(--radius-sm);
+      border: 1px solid var(--border); background: var(--surface);
+      display: flex; gap: .9rem; align-items: center; max-width: 30rem;
+    }
+    .funfact .ic { color: var(--violet); font-size: 1.25rem; }
+    .funfact span { font-size: 0.95rem; color: var(--muted); }
+    .funfact b { color: var(--text); }
+
+    .about__stats { display: flex; gap: 2.5rem; margin-top: 2.2rem; flex-wrap: wrap; }
+    .stat .num { font-family: var(--font-head); font-size: 2rem; font-weight: 700; }
+    .stat .lbl { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    /* Portrait (CSS frame + inline-SVG placeholder, fully offline) */
+    .about__media { position: relative; }
+    .portrait {
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border-2); background: var(--surface);
+      box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8);
+      aspect-ratio: 5/6;
+    }
+    .portrait img, .portrait__ph { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .portrait::after {
+      content:''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.55));
+      mix-blend-mode: multiply;
+    }
+    .portrait__glow {
+      position: absolute; inset: -2px; border-radius: var(--radius); z-index: -1;
+      background: var(--accent-grad); filter: blur(28px); opacity: 0.35;
+    }
+    .portrait__badge {
+      position: absolute; bottom: 1rem; left: 1rem; z-index: 3;
+      display: inline-flex; align-items: center; gap: .55rem;
+      padding: .55rem .9rem; border-radius: 999px;
+      background: rgba(10,10,10,0.6); backdrop-filter: blur(10px);
+      border: 1px solid var(--border-2); font-size: 0.8rem; font-weight: 500;
+    }
+    .portrait__badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+
+    /* ============================================================= */
+    /*  SKILLS                                                       */
+    /* ============================================================= */
+    .skills__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); margin-top: 3rem; }
+    .skill-group h3 {
+      font-size: 1.1rem; font-weight: 600; margin-bottom: 1.4rem;
+      display: flex; align-items: center; gap: .7rem; color: var(--text);
+    }
+    .skill-group h3 .ic-box {
+      width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
+      background: var(--surface); border: 1px solid var(--border); font-size: 1rem;
+    }
+    .skill-group.dev h3 .ic-box { color: var(--blue); }
+    .skill-group.design h3 .ic-box { color: var(--violet); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .tag {
+      font-size: 0.92rem; font-weight: 500; padding: 0.6rem 1.05rem; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+      display: inline-flex; align-items: center; gap: .5rem;
+      transition: transform .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease);
+      animation: floaty 6s ease-in-out infinite;
+    }
+    /* small accent dot before each pill (offline, no icon font) */
+    .tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .55; }
+    .skill-group.dev .tag::before { background: var(--blue); }
+    .skill-group.design .tag::before { background: var(--violet); }
+    .tag:hover { transform: translateY(-4px); color: var(--text); border-color: var(--border-2); background: var(--surface-2); }
+    .skill-group.dev .tag:hover { border-color: var(--blue); box-shadow: 0 8px 24px -12px rgba(79,142,247,0.7); }
+    .skill-group.design .tag:hover { border-color: var(--violet); box-shadow: 0 8px 24px -12px rgba(124,58,237,0.7); }
+    .tag:nth-child(3n)   { animation-delay: -1.5s; }
+    .tag:nth-child(3n+1) { animation-delay: -3s; }
+    .tag:nth-child(3n+2) { animation-delay: -4.5s; }
+    @keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-5px); } }
+
+    /* ============================================================= */
+    /*  PROJECTS (horizontal scroll showcase, glass cards)           */
+    /* ============================================================= */
+    .projects__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; }
+    .projects__nav { display: flex; gap: .6rem; }
+    .projects__nav button {
+      width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border-2);
+      background: var(--surface); color: var(--text); display: grid; place-items: center; font-size: 1rem;
+      transition: background .25s var(--ease), border-color .25s var(--ease), transform .2s var(--ease);
+    }
+    .projects__nav button:hover { background: var(--surface-2); border-color: var(--blue); }
+    .projects__nav button:active { transform: scale(0.92); }
+
+    .projects__track {
+      display: flex; gap: 1.5rem; margin-top: 2.5rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      padding-bottom: 1.5rem; padding-inline: var(--pad-x);
+      margin-inline: calc(-1 * var(--pad-x));
+      scrollbar-width: thin; scrollbar-color: var(--border-2) transparent;
+    }
+    .projects__track::-webkit-scrollbar { height: 6px; }
+    .projects__track::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 99px; }
+    .projects__track::-webkit-scrollbar-track { background: transparent; }
+    /* fade the carousel at its edges (desktop only, to avoid clipping cards on mobile) */
+    @media (min-width: 901px) {
+      .projects__track {
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
+        mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
+      }
+    }
+
+    .project-card {
+      scroll-snap-align: start; flex: 0 0 clamp(280px, 80vw, 380px);
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border);
+      /* Glassmorphism */
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(14px) saturate(130%); -webkit-backdrop-filter: blur(14px) saturate(130%);
+      min-height: 440px; display: flex; flex-direction: column;
+      transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+    }
+    .project-card:hover { transform: translateY(-8px); border-color: var(--border-2); box-shadow: 0 30px 60px -25px rgba(0,0,0,0.85); }
+    /* cursor-tracking spotlight */
+    .project-card::after {
+      content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0;
+      background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(130,170,255,0.14), transparent 60%);
+      transition: opacity .4s var(--ease);
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    /* Thumb = pure CSS gradient + a large faded initial (offline) */
+    .project-card__thumb {
+      height: 200px; position: relative; overflow: hidden; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--c1, #4f8ef7), var(--c2, #7c3aed));
+    }
+    .project-card__mark {
+      font-family: var(--font-head); font-size: 5.5rem; font-weight: 700;
+      color: #fff; opacity: 0.22; letter-spacing: -0.04em;
+      transition: transform .6s var(--ease);
+    }
+    .project-card:hover .project-card__mark { transform: scale(1.08); }
+    .project-card__num {
+      position: absolute; top: 1rem; left: 1rem; font-family: var(--font-head);
+      font-size: 0.78rem; letter-spacing: 0.15em; color: var(--text);
+      background: rgba(10,10,10,0.5); padding: .35rem .7rem; border-radius: 999px;
+      border: 1px solid var(--border-2); backdrop-filter: blur(6px);
+    }
+
+    .project-card__body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+    .project-card__role { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: .55rem; }
+    .project-card__title { font-size: 1.4rem; font-weight: 600; margin-bottom: .9rem; }
+    .project-card__desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.2rem; }
+    .project-card__tech { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; }
+    .project-card__tech span {
+      font-size: 0.76rem; font-weight: 500; padding: .35rem .65rem; border-radius: 8px;
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+    }
+    .project-card__link {
+      position: absolute; top: 1rem; right: 1rem; z-index: 4;
+      width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+      background: rgba(10,10,10,0.5); border: 1px solid var(--border-2); backdrop-filter: blur(6px);
+      color: var(--text); font-size: 0.95rem; transition: background .25s var(--ease), transform .25s var(--ease);
+    }
+    .project-card__link:hover { background: var(--accent-grad); transform: rotate(-12deg); }
+
+    /* Hover reveal: on hover-capable devices, tuck the description + slide up */
+    @media (hover: hover) and (pointer: fine) {
+      .project-card__desc {
+        max-height: 0; opacity: 0; overflow: hidden; margin-bottom: 0; transform: translateY(6px);
+        transition: max-height .45s var(--ease), opacity .35s var(--ease),
+                    margin-bottom .45s var(--ease), transform .45s var(--ease);
+      }
+      .project-card:hover .project-card__desc { max-height: 140px; opacity: 1; margin-bottom: 1.2rem; transform: translateY(0); }
+    }
+
+    /* ============================================================= */
+    /*  PROCESS                                                      */
+    /* ============================================================= */
+    .process__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 3rem; }
+    .process-step {
+      position: relative; padding: 1.8rem 1.5rem; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--surface);
+      transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+      overflow: hidden;
+    }
+    .process-step::before {
+      content: ''; position: absolute; inset: 0; opacity: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(79,142,247,0.18), transparent 70%);
+      transition: opacity .35s var(--ease);
+    }
+    .process-step:hover { transform: translateY(-6px); border-color: var(--border-2); background: var(--surface-2); }
+    .process-step:hover::before { opacity: 1; }
+    .process-step__num {
+      font-family: var(--font-head); font-size: 0.85rem; font-weight: 600;
+      color: var(--blue); letter-spacing: 0.1em; margin-bottom: 1.4rem;
+    }
+    .process-step__icon {
+      width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center;
+      background: var(--accent-grad); font-size: 1.3rem; color: #fff; margin-bottom: 1.2rem;
+      box-shadow: 0 10px 24px -10px rgba(124,58,237,0.7);
+    }
+    .process-step h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: .6rem; }
+    .process-step p { font-size: 0.92rem; color: var(--muted); }
+
+    /* ============================================================= */
+    /*  CONTACT / FOOTER                                             */
+    /* ============================================================= */
+    .contact { text-align: center; padding-block: clamp(5rem, 14vw, 10rem); }
+    .contact__pre { font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 1.5rem; }
+    .contact h2 {
+      font-size: clamp(2.4rem, 9vw, 6.5rem); font-weight: 700; line-height: 0.98;
+      letter-spacing: -0.03em; margin-bottom: 2rem;
+    }
+    .contact__email {
+      display: inline-flex; align-items: center; gap: .8rem;
+      font-family: var(--font-head); font-size: clamp(1.1rem, 3.5vw, 1.9rem); font-weight: 500;
+      padding-bottom: .4rem; border-bottom: 1px solid var(--border-2);
+      transition: color .3s var(--ease), border-color .3s var(--ease), gap .3s var(--ease);
+    }
+    .contact__email:hover { color: var(--blue); border-color: var(--blue); gap: 1.2rem; }
+
+    .socials { display: flex; justify-content: center; gap: 1rem; margin-top: 3rem; }
+    .socials a {
+      width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+      border: 1px solid var(--border); background: var(--surface); color: var(--muted); font-size: 1.25rem;
+      transition: transform .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+    }
+    .socials a:hover { transform: translateY(-5px); color: #fff; border-color: var(--blue); background: var(--surface-2); }
+
+    .footer {
+      border-top: 1px solid var(--border); padding-block: 2rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .footer p { font-size: 0.85rem; color: var(--muted-2); }
+    .to-top { font-size: 0.82rem; color: var(--muted); display: inline-flex; align-items: center; gap: .5rem; transition: color .3s var(--ease); }
+    .to-top:hover { color: var(--text); }
+    .to-top .ic { transition: transform .3s var(--ease); }
+    .to-top:hover .ic { transform: translateY(-3px); }
+
+    /* ============================================================= */
+    /*  SCROLL REVEAL ANIMATIONS                                     */
+    /* ============================================================= */
+    [data-reveal] {
+      opacity: 0; transform: translateY(34px);
+      transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+      transition-delay: var(--delay, 0ms);
+      will-change: opacity, transform;
+    }
+    [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================= */
+    /*  RESPONSIVE                                                   */
+    /* ============================================================= */
+    @media (max-width: 900px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__burger { display: block; }
+      .about__grid { grid-template-columns: 1fr; }
+      .about__media { max-width: 24rem; margin-inline: auto; order: -1; }
+      .skills__cols { grid-template-columns: 1fr; }
+      .process__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .process__grid { grid-template-columns: 1fr; }
+      .about__stats { gap: 1.5rem; }
+      .hero { padding-top: 5rem; }
+    }
+
+    /* Respect users who prefer less motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+      .hero h1 .line > span { transform: none !important; } /* keep name visible without the rise animation */
+      .grain { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===================================================================== -->
+  <!--  INLINE SVG ICON SPRITE (offline replacement for icon fonts)          -->
+  <!--  Outline icons inherit stroke=currentColor; brand icons are filled.   -->
+  <!-- ===================================================================== -->
+  <svg id="icon-sprite" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="ic-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    <symbol id="ic-arrow-left" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+    <symbol id="ic-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+    <symbol id="ic-external" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+    <symbol id="ic-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></symbol>
+    <symbol id="ic-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+    <symbol id="ic-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="ic-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+    <symbol id="ic-pen" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></symbol>
+    <symbol id="ic-coffee" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></symbol>
+    <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="ic-send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+    <!-- brand glyphs (filled) -->
+    <symbol id="ic-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="ic-linkedin" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+    <symbol id="ic-dribbble" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12c6.627 0 12-5.373 12-12S18.627 0 12 0zm9.885 11.441c-2.575-.422-4.943-.445-7.103-.073-.244-.563-.497-1.125-.767-1.68 2.31-1 4.165-2.358 5.548-4.082a9.863 9.863 0 0 1 2.322 5.835zm-3.842-7.282c-1.205 1.554-2.868 2.783-4.986 3.68a46.287 46.287 0 0 0-3.488-5.438A9.894 9.894 0 0 1 12 2.087c2.275 0 4.368.779 6.043 2.072zM7.527 3.166a44.49 44.49 0 0 1 3.537 5.381c-2.43.715-5.331 1.082-8.684 1.105a9.931 9.931 0 0 1 5.147-6.486zM2.087 12.001l.013-.32c3.849-.062 7.169-.526 9.95-1.392.249.485.487.978.717 1.474-3.426 1.094-6.18 3.034-8.222 5.823a9.876 9.876 0 0 1-2.458-5.585zm3.97 7.149c1.86-2.602 4.382-4.378 7.553-5.323.83 2.16 1.494 4.396 1.988 6.706a9.881 9.881 0 0 1-9.541-1.383zm11.412.439a47.06 47.06 0 0 0-1.806-6.124c1.926-.309 4.016-.282 6.27.084a9.912 9.912 0 0 1-4.464 6.04z"/></symbol>
+  </svg>
+
+  <!-- Texture + cursor + progress overlays -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <!-- ============================ NAV ============================ -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav__logo magnetic" data-cursor>
+      <span class="dot"></span>
+      <!-- EDIT: your name / initials -->
+      Edwin&nbsp;Ranoco
+    </a>
+    <ul class="nav__links">
+      <li><a href="#about" data-cursor>About</a></li>
+      <li><a href="#skills" data-cursor>Skills</a></li>
+      <li><a href="#work" data-cursor>Work</a></li>
+      <li><a href="#process" data-cursor>Process</a></li>
+      <li><a href="#contact" data-cursor>Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav__cta magnetic" data-cursor>Let's talk</a>
+    <button class="nav__burger" id="burger" aria-label="Open menu"><svg class="ic" aria-hidden="true"><use href="#ic-menu"></use></svg></button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- ============================ HERO =========================== -->
+  <header class="hero" id="hero">
+    <canvas class="hero__canvas" id="particles" aria-hidden="true"></canvas>
+    <div class="aurora" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+    <div class="hero__grid" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="hero__inner">
+        <span class="hero__eyebrow" data-reveal>
+          <span class="pulse"></span> Available for freelance &amp; full-time
+        </span>
+
+        <!-- EDIT: your name -->
+        <h1>
+          <span class="line"><span>Edwin</span></span>
+          <span class="line"><span class="accent-text">Ranoco</span></span>
+        </h1>
+
+        <!-- Alias / handle kicker -->
+        <p data-reveal style="--delay:120ms; font-family:var(--font-head); font-weight:500; font-size:clamp(1rem,2.6vw,1.35rem); letter-spacing:0.14em; text-transform:uppercase; color:var(--muted-2); margin:-0.4rem 0 1.5rem;">
+          <span style="color:var(--blue);">aka</span> Toshi
+        </p>
+
+        <!-- Typewriter cycles through roles -->
+        <p class="hero__role" data-reveal style="--delay:160ms">
+          I'm a <span class="tw" id="typewriter"></span><span class="caret"></span>
+        </p>
+
+        <!-- EDIT: tagline / short intro -->
+        <p class="hero__desc" data-reveal style="--delay:240ms">
+          I build things people love to use — clean, intuitive interfaces with a love for motion and the small details that make products feel alive.
+        </p>
+
+        <div class="hero__actions" data-reveal style="--delay:320ms">
+          <a href="#work" class="btn btn--primary magnetic" data-cursor>View Work <svg class="ic arrow" aria-hidden="true"><use href="#ic-arrow-right"></use></svg></a>
+          <a href="#contact" class="btn btn--ghost magnetic" data-cursor>Contact Me <svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <a href="#about" class="scroll-cue" data-cursor aria-label="Scroll down">
+      <span class="mouse"></span> Scroll
+    </a>
+  </header>
+
+  <!-- ============================ ABOUT ========================== -->
+  <section id="about">
+    <div class="container">
+      <span class="section-label" data-reveal>01 — About</span>
+      <h2 class="section-title" data-reveal style="--delay:80ms">Designer &amp; developer with a soft spot for the details.</h2>
+
+      <div class="about__grid">
+        <div class="about__body">
+          <!-- EDIT: your bio (2–3 sentences) -->
+          <p data-reveal>
+            I'm a <strong>full-stack developer and UX/UI designer</strong> who turns complex problems
+            into clean, intuitive products. I work end to end — close enough to Figma to sweat the
+            kerning, deep enough in the stack to build the API behind it.
+          </p>
+          <p data-reveal style="--delay:80ms">
+            Over the last few years I've helped startups and teams craft products that feel
+            considered, fast, and genuinely enjoyable to use. I care about accessibility,
+            performance, and that hard-to-name quality that makes an interface feel <strong>right</strong>.
+          </p>
+
+          <!-- EDIT: fun fact / personality detail -->
+          <div class="funfact" data-reveal style="--delay:160ms">
+            <svg class="ic" aria-hidden="true"><use href="#ic-coffee"></use></svg>
+            <span>Fun fact — <b>when I'm not pushing pixels, I'm chasing espresso shots and hunting for vinyl records.</b></span>
+          </div>
+
+          <!-- EDIT: stats -->
+          <div class="about__stats" data-reveal style="--delay:220ms">
+            <div class="stat"><div class="num accent-text"><span class="count" data-to="5">0</span>+</div><div class="lbl">Years experience</div></div>
+            <div class="stat"><div class="num accent-text"><span class="count" data-to="40">0</span>+</div><div class="lbl">Projects shipped</div></div>
+            <div class="stat"><div class="num accent-text"><span class="count" data-to="100">0</span>%</div><div class="lbl">Caffeine powered</div></div>
+          </div>
+        </div>
+
+        <div class="about__media" data-reveal style="--delay:120ms">
+          <div class="portrait">
+            <div class="portrait__glow"></div>
+            <!-- EDIT: To use your photo, replace this <svg> placeholder with:
+                 <img src="your-photo.jpg" alt="Edwin Ranoco" /> -->
+            <svg class="portrait__ph" viewBox="0 0 500 600" role="img" aria-label="Portrait of Edwin Ranoco" preserveAspectRatio="xMidYMid slice">
+              <rect width="500" height="600" fill="#0c0c10"/>
+              <circle cx="250" cy="250" r="78" fill="none" stroke="#4f8ef7" stroke-width="5" opacity="0.55"/>
+              <path d="M140 440c0-61 49-110 110-110s110 49 110 110" fill="none" stroke="#7c3aed" stroke-width="5" opacity="0.55"/>
+              <text x="250" y="548" font-family="system-ui, sans-serif" font-size="26" letter-spacing="3" fill="#71717a" text-anchor="middle">YOUR PHOTO</text>
+            </svg>
+            <span class="portrait__badge"><span class="dot"></span> Open to work</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SKILLS ========================= -->
+  <section id="skills">
+    <div class="container">
+      <span class="section-label" data-reveal>02 — Skills</span>
+      <h2 class="section-title" data-reveal style="--delay:80ms">A toolkit that spans design and code.</h2>
+      <p class="section-intro" data-reveal style="--delay:120ms">From first wireframe to final deploy — here's what I reach for to bring ideas to life.</p>
+
+      <div class="skills__cols">
+        <!-- EDIT: development skills -->
+        <div class="skill-group dev" data-reveal style="--delay:120ms">
+          <h3><span class="ic-box"><svg class="ic" aria-hidden="true"><use href="#ic-code"></use></svg></span> Development</h3>
+          <div class="tags">
+            <span class="tag" data-cursor>HTML</span>
+            <span class="tag" data-cursor>CSS</span>
+            <span class="tag" data-cursor>JavaScript</span>
+            <span class="tag" data-cursor>C#</span>
+            <span class="tag" data-cursor>Lua</span>
+            <span class="tag" data-cursor>React</span>
+            <span class="tag" data-cursor>Tailwind</span>
+            <span class="tag" data-cursor>Unity</span>
+            <span class="tag" data-cursor>Roblox</span>
+            <span class="tag" data-cursor>Git</span>
+          </div>
+        </div>
+
+        <!-- EDIT: design skills -->
+        <div class="skill-group design" data-reveal style="--delay:200ms">
+          <h3><span class="ic-box"><svg class="ic" aria-hidden="true"><use href="#ic-pen"></use></svg></span> Design</h3>
+          <div class="tags">
+            <span class="tag" data-cursor>Figma</span>
+            <span class="tag" data-cursor>Adobe XD</span>
+            <span class="tag" data-cursor>Design Systems</span>
+            <span class="tag" data-cursor>Prototyping</span>
+            <span class="tag" data-cursor>Wireframing</span>
+            <span class="tag" data-cursor>User Research</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PROJECTS ======================= -->
+  <section id="work">
+    <div class="container">
+      <div class="projects__head">
+        <div>
+          <span class="section-label" data-reveal>03 — Selected Work</span>
+          <h2 class="section-title" data-reveal style="--delay:80ms">Projects I'm proud of.</h2>
+        </div>
+        <div class="projects__nav" data-reveal style="--delay:120ms">
+          <button id="prevBtn" aria-label="Previous project" data-cursor><svg class="ic" aria-hidden="true"><use href="#ic-arrow-left"></use></svg></button>
+          <button id="nextBtn" aria-label="Next project" data-cursor><svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"></use></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal scroll showcase of glassmorphism cards -->
+    <div class="container">
+      <div class="projects__track" id="projectsTrack" data-reveal>
+
+        <!-- EDIT: project 1 -->
+        <article class="project-card" data-cursor>
+          <div class="project-card__thumb" style="--c1:#4f8ef7; --c2:#7c3aed;">
+            <span class="project-card__num">01</span>
+            <span class="project-card__mark" aria-hidden="true">L</span>
+          </div>
+          <a href="#" class="project-card__link" aria-label="Open project" data-cursor><svg class="ic" aria-hidden="true"><use href="#ic-external"></use></svg></a>
+          <div class="project-card__body">
+            <span class="project-card__role">Lead Front-End</span>
+            <h3 class="project-card__title">Lumen Analytics</h3>
+            <p class="project-card__desc">A real-time analytics dashboard with live charts, custom theming, and a component library built for speed. Reduced reporting time for users by 60%.</p>
+            <div class="project-card__tech"><span>React</span><span>Tailwind</span><span>Recharts</span></div>
+          </div>
+        </article>
+
+        <!-- EDIT: project 2 -->
+        <article class="project-card" data-cursor>
+          <div class="project-card__thumb" style="--c1:#7c3aed; --c2:#4f8ef7;">
+            <span class="project-card__num">02</span>
+            <span class="project-card__mark" aria-hidden="true">O</span>
+          </div>
+          <a href="#" class="project-card__link" aria-label="Open project" data-cursor><svg class="ic" aria-hidden="true"><use href="#ic-external"></use></svg></a>
+          <div class="project-card__body">
+            <span class="project-card__role">UX / UI Designer</span>
+            <h3 class="project-card__title">Orbit Travel</h3>
+            <p class="project-card__desc">An end-to-end travel-booking experience — from research and flows to a polished, high-fidelity prototype that tested 4.8/5 with real users.</p>
+            <div class="project-card__tech"><span>Figma</span><span>Prototyping</span><span>Design System</span></div>
+          </div>
+        </article>
+
+        <!-- EDIT: project 3 -->
+        <article class="project-card" data-cursor>
+          <div class="project-card__thumb" style="--c1:#4f8ef7; --c2:#38bdf8;">
+            <span class="project-card__num">03</span>
+            <span class="project-card__mark" aria-hidden="true">N</span>
+          </div>
+          <a href="#" class="project-card__link" aria-label="Open project" data-cursor><svg class="ic" aria-hidden="true"><use href="#ic-external"></use></svg></a>
+          <div class="project-card__body">
+            <span class="project-card__role">Front-End Developer</span>
+            <h3 class="project-card__title">Nimbus Weather</h3>
+            <p class="project-card__desc">A buttery-smooth weather PWA with animated conditions, offline support, and a delightful onboarding. Installable and fast on any device.</p>
+            <div class="project-card__tech"><span>JavaScript</span><span>CSS</span><span>REST API</span></div>
+          </div>
+        </article>
+
+        <!-- EDIT: project 4 -->
+        <article class="project-card" data-cursor>
+          <div class="project-card__thumb" style="--c1:#7c3aed; --c2:#6366f1;">
+            <span class="project-card__num">04</span>
+            <span class="project-card__mark" aria-hidden="true">F</span>
+          </div>
+          <a href="#" class="project-card__link" aria-label="Open project" data-cursor><svg class="ic" aria-hidden="true"><use href="#ic-external"></use></svg></a>
+          <div class="project-card__body">
+            <span class="project-card__role">Designer &amp; Developer</span>
+            <h3 class="project-card__title">Folio CMS</h3>
+            <p class="project-card__desc">A headless portfolio CMS for creatives — drag-and-drop layouts, instant publishing, and theming that doesn't require touching code.</p>
+            <div class="project-card__tech"><span>React</span><span>Node</span><span>Git</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PROCESS ======================== -->
+  <section id="process">
+    <div class="container">
+      <span class="section-label" data-reveal>04 — How I Work</span>
+      <h2 class="section-title" data-reveal style="--delay:80ms">A simple process, sharp results.</h2>
+
+      <div class="process__grid">
+        <div class="process-step" data-reveal style="--delay:80ms">
+          <div class="process-step__num">STEP 01</div>
+          <div class="process-step__icon"><svg class="ic" aria-hidden="true"><use href="#ic-search"></use></svg></div>
+          <h3>Research</h3>
+          <p>Understand the people, the problem, and the goals before a single pixel is placed.</p>
+        </div>
+        <div class="process-step" data-reveal style="--delay:160ms">
+          <div class="process-step__num">STEP 02</div>
+          <div class="process-step__icon"><svg class="ic" aria-hidden="true"><use href="#ic-pen"></use></svg></div>
+          <h3>Design</h3>
+          <p>Wireframe, prototype, and refine in Figma until the experience feels effortless.</p>
+        </div>
+        <div class="process-step" data-reveal style="--delay:240ms">
+          <div class="process-step__num">STEP 03</div>
+          <div class="process-step__icon"><svg class="ic" aria-hidden="true"><use href="#ic-code"></use></svg></div>
+          <h3>Build</h3>
+          <p>Translate design into clean, accessible, performant front-end code — pixel-perfect.</p>
+        </div>
+        <div class="process-step" data-reveal style="--delay:320ms">
+          <div class="process-step__num">STEP 04</div>
+          <div class="process-step__icon"><svg class="ic" aria-hidden="true"><use href="#ic-send"></use></svg></div>
+          <h3>Launch</h3>
+          <p>Ship, measure, and iterate — because great products are never really finished.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT ======================== -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <p class="contact__pre" data-reveal>Let's build something</p>
+      <h2 data-reveal style="--delay:80ms">Let's Work <span class="accent-text">Together</span></h2>
+      <p class="section-intro" style="margin-inline:auto" data-reveal>
+        Have a project in mind, or just want to say hi? My inbox is always open.
+      </p>
+
+      <!-- EDIT: your email (used in both mailto links below) -->
+      <div data-reveal style="--delay:160ms; margin-top:2.5rem">
+        <a href="mailto:toshi.dev26@gmail.com?subject=Let%27s%20work%20together" class="contact__email magnetic" data-cursor>
+          <svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg> toshi.dev26@gmail.com
+        </a>
+      </div>
+
+      <div data-reveal style="--delay:220ms; margin-top:2rem">
+        <a href="mailto:toshi.dev26@gmail.com?subject=Let%27s%20work%20together&amp;body=Hi%20Edwin%2C%0A%0AI%27d%20love%20to%20talk%20about..." class="btn btn--primary magnetic" data-cursor>
+          <svg class="ic" aria-hidden="true"><use href="#ic-send"></use></svg> Send me an email
+        </a>
+      </div>
+
+      <!-- EDIT: your social links -->
+      <div class="socials" data-reveal style="--delay:280ms">
+        <a href="https://github.com/USERNAME" target="_blank" rel="noopener" aria-label="GitHub" class="magnetic" data-cursor><svg class="ic ic-brand" aria-hidden="true"><use href="#ic-github"></use></svg></a>
+        <a href="https://linkedin.com/in/USERNAME" target="_blank" rel="noopener" aria-label="LinkedIn" class="magnetic" data-cursor><svg class="ic ic-brand" aria-hidden="true"><use href="#ic-linkedin"></use></svg></a>
+        <a href="https://dribbble.com/USERNAME" target="_blank" rel="noopener" aria-label="Dribbble" class="magnetic" data-cursor><svg class="ic ic-brand" aria-hidden="true"><use href="#ic-dribbble"></use></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FOOTER ========================= -->
+  <footer class="container">
+    <div class="footer">
+      <!-- EDIT: name + year auto-updates -->
+      <p>© <span id="year"></span> Edwin Ranoco (Toshi) — Designed &amp; built with care.</p>
+      <a href="#hero" class="to-top" data-cursor>Back to top <svg class="ic" aria-hidden="true"><use href="#ic-arrow-up"></use></svg></a>
+    </div>
+  </footer>
+
+  <!-- ============================================================= -->
+  <!--  JAVASCRIPT (no dependencies)                                 -->
+  <!-- ============================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer  = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    /* ---------------------------------------------------------------
+     * 1. CUSTOM CURSOR (glowing dot + lagging ring) — desktop only
+     * ------------------------------------------------------------- */
+    (function customCursor() {
+      if (!finePointer) return;
+      const dot  = document.querySelector('.cursor-dot');
+      const ring = document.querySelector('.cursor-ring');
+      if (!dot || !ring) return;
+
+      document.body.classList.add('custom-cursor-on');
+
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX; mouseY = e.clientY;
+        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      });
+
+      (function loop() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+        requestAnimationFrame(loop);
+      })();
+
+      const hoverTargets = document.querySelectorAll('a, button, [data-cursor]');
+      hoverTargets.forEach((el) => {
+        el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+      });
+
+      document.addEventListener('mouseleave', () => { dot.style.opacity = ring.style.opacity = '0'; });
+      document.addEventListener('mouseenter', () => { dot.style.opacity = ring.style.opacity = '1'; });
+    })();
+
+    /* ---------------------------------------------------------------
+     * 2. MAGNETIC BUTTONS — element subtly follows the cursor
+     * ------------------------------------------------------------- */
+    (function magnetic() {
+      if (!finePointer || reduceMotion) return;
+      const strength = 0.35;
+      document.querySelectorAll('.magnetic').forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+          const r = el.getBoundingClientRect();
+          const x = e.clientX - (r.left + r.width / 2);
+          const y = e.clientY - (r.top + r.height / 2);
+          el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+        });
+        el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+      });
+    })();
+
+    /* ---------------------------------------------------------------
+     * 3. TYPEWRITER — cycle through roles
+     * ------------------------------------------------------------- */
+    (function typewriter() {
+      const el = document.getElementById('typewriter');
+      if (!el) return;
+      // EDIT: roles to cycle through
+      const words = ['Full-Stack Dev', 'UX Designer', 'Problem Solver', 'Pixel Perfectionist'];
+      let w = 0, c = 0, deleting = false;
+
+      function tick() {
+        const word = words[w];
+        c += deleting ? -1 : 1;
+        el.textContent = word.slice(0, c);
+
+        let delay = deleting ? 45 : 95;
+        if (!deleting && c === word.length) { delay = 1500; deleting = true; }
+        else if (deleting && c === 0) { deleting = false; w = (w + 1) % words.length; delay = 350; }
+        setTimeout(tick, delay);
+      }
+      if (reduceMotion) { el.textContent = words[0]; return; }
+      tick();
+    })();
+
+    /* ---------------------------------------------------------------
+     * 4. NAVBAR — scrolled state, mobile menu, active link, scroll bar
+     * ------------------------------------------------------------- */
+    (function navbar() {
+      const nav = document.getElementById('nav');
+      const burger = document.getElementById('burger');
+      const menu = document.getElementById('mobileMenu');
+      const progress = document.querySelector('.scroll-progress');
+      const sections = document.querySelectorAll('section[id], header[id]');
+      const navLinks = document.querySelectorAll('.nav__links a');
+
+      function onScroll() {
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 40);
+
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        if (progress) progress.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+
+        let current = '';
+        sections.forEach((s) => { if (y >= s.offsetTop - 120) current = s.id; });
+        navLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      function toggleMenu(open) {
+        menu.classList.toggle('open', open);
+        burger.innerHTML = open
+          ? '<svg class="ic" aria-hidden="true"><use href="#ic-close"></use></svg>'
+          : '<svg class="ic" aria-hidden="true"><use href="#ic-menu"></use></svg>';
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('open')));
+      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggleMenu(false)));
+    })();
+
+    /* ---------------------------------------------------------------
+     * 5. SCROLL REVEAL — fade + slide in on enter
+     * ------------------------------------------------------------- */
+    (function reveal() {
+      const items = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach((el) => el.classList.add('in-view'));
+        return;
+      }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      items.forEach((el) => io.observe(el));
+    })();
+
+    /* ---------------------------------------------------------------
+     * 6. PROJECTS — arrow controls + drag-to-scroll
+     * ------------------------------------------------------------- */
+    (function projects() {
+      const track = document.getElementById('projectsTrack');
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      if (!track) return;
+
+      const amount = () => Math.min(track.clientWidth * 0.8, 400);
+      prev && prev.addEventListener('click', () => track.scrollBy({ left: -amount(), behavior: 'smooth' }));
+      next && next.addEventListener('click', () => track.scrollBy({ left:  amount(), behavior: 'smooth' }));
+
+      let down = false, startX = 0, startScroll = 0;
+      track.addEventListener('mousedown', (e) => {
+        if (e.target.closest('a')) return;
+        down = true; startX = e.pageX; startScroll = track.scrollLeft; track.style.cursor = 'grabbing';
+      });
+      window.addEventListener('mouseup', () => { down = false; track.style.cursor = ''; });
+      track.addEventListener('mousemove', (e) => {
+        if (!down) return;
+        e.preventDefault();
+        track.scrollLeft = startScroll - (e.pageX - startX);
+      });
+    })();
+
+    /* ---------------------------------------------------------------
+     * 7. HERO PARTICLE FIELD — subtle drifting constellation
+     * ------------------------------------------------------------- */
+    (function particles() {
+      const canvas = document.getElementById('particles');
+      if (!canvas || reduceMotion) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr, dots = [], mouse = { x: -999, y: -999 };
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.min(70, Math.floor((w * h) / 16000));
+        dots = Array.from({ length: count }, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+          r: Math.random() * 1.6 + 0.6
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < dots.length; i++) {
+          const d = dots[i];
+          d.x += d.vx; d.y += d.vy;
+          if (d.x < 0 || d.x > w) d.vx *= -1;
+          if (d.y < 0 || d.y > h) d.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(180, 200, 255, 0.55)';
+          ctx.fill();
+
+          for (let j = i + 1; j < dots.length; j++) {
+            const e = dots[j];
+            const dist = Math.hypot(d.x - e.x, d.y - e.y);
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(d.x, d.y); ctx.lineTo(e.x, e.y);
+              ctx.strokeStyle = `rgba(79,142,247,${0.14 * (1 - dist / 120)})`;
+              ctx.lineWidth = 1; ctx.stroke();
+            }
+          }
+          const md = Math.hypot(d.x - mouse.x, d.y - mouse.y);
+          if (md < 160) {
+            ctx.beginPath();
+            ctx.moveTo(d.x, d.y); ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(124,58,237,${0.25 * (1 - md / 160)})`;
+            ctx.lineWidth = 1; ctx.stroke();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+
+      canvas.parentElement.addEventListener('mousemove', (e) => {
+        const r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+      });
+      canvas.parentElement.addEventListener('mouseleave', () => { mouse.x = mouse.y = -999; });
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+
+    /* ---------------------------------------------------------------
+     * 8. CARD SPOTLIGHT — radial glow follows the cursor on cards/steps
+     * ------------------------------------------------------------- */
+    (function spotlight() {
+      if (!finePointer) return;
+      document.querySelectorAll('.project-card, .process-step').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+    })();
+
+    /* ---------------------------------------------------------------
+     * 9. STAT COUNTERS — count up when scrolled into view
+     * ------------------------------------------------------------- */
+    (function counters() {
+      const els = document.querySelectorAll('.count');
+      if (!els.length) return;
+
+      function run(el) {
+        const to = parseInt(el.dataset.to, 10) || 0;
+        if (reduceMotion) { el.textContent = to; return; }
+        const duration = 1400; let startTime = null;
+        function step(t) {
+          if (startTime === null) startTime = t;
+          const p = Math.min((t - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+          el.textContent = Math.round(to * eased);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } });
+      }, { threshold: 0.6 });
+      els.forEach((el) => io.observe(el));
+    })();
+
+    /* ---------------------------------------------------------------
+     * 10. MISC — current year
+     * ------------------------------------------------------------- */
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  })();
+  </script>
+</body>
+</html>
