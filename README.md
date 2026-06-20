@@ -2,7 +2,7 @@
 
 A single-file, fully self-contained personal portfolio for **Edwin Ranoco (aka Toshi)** — Full-Stack Developer & UX/UI Designer.
 
-🔗 **Live site:** https://USERNAME.github.io  <!-- update USERNAME after deploy -->
+🔗 **Live site:** https://toshidev26-cloud.github.io  <!-- update toshidev26-cloud after deploy -->
 
 ## Features
 - 100% offline / self-contained — no CDN, no build step, no dependencies
@@ -16,10 +16,10 @@ A single-file, fully self-contained personal portfolio for **Edwin Ranoco (aka T
 Plain **HTML + CSS + JavaScript** in one `index.html`. System font stack, inline SVG icons, CSS/SVG image placeholders.
 
 ## Deploy (GitHub Pages)
-1. Create a repository named **`USERNAME.github.io`** (replace with your GitHub username).
+1. Create a repository named **`toshidev26-cloud.github.io`** (replace with your GitHub username).
 2. Push this folder to it.
 3. In the repo: **Settings → Pages → Branch: `main` → Save**.
-4. Live in ~1 minute at `https://USERNAME.github.io`.
+4. Live in ~1 minute at `https://toshidev26-cloud.github.io`.
 
 ## Customize
 Personal fields are marked with `<!-- EDIT: ... -->` comments in `index.html`
