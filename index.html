@@ -652,12 +652,17 @@
     /*  MASCOT / DESKTOP PET                                         */
     /* ============================================================= */
     .pet {
-      position: fixed; left: 20px; bottom: 20px; z-index: 880;
+      position: fixed; left: 0; bottom: 20px; z-index: 880;
       display: block; width: 92px; height: 108px; padding: 0; border: none; background: none; line-height: 0;
-      transform: translateY(150%); transition: transform .8s var(--ease);
+      transform: translateX(20px); transition: transform 2s var(--ease); /* horizontal roaming */
       -webkit-tap-highlight-color: transparent;
     }
-    .pet.up { transform: translateY(0); }
+    .pet-rise { display: block; transform: translateY(150%); transition: transform .8s var(--ease); } /* pop-up entrance */
+    .pet.up .pet-rise { transform: translateY(0); }
+    .pet-svg { transition: transform .3s var(--ease); } /* smooth turn-around */
+    .pet.face-left .pet-svg { transform: scaleX(-1); }
+    .pet.walking .pet-body-wrap { animation: petWalk .42s ease-in-out infinite; }
+    @keyframes petWalk { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-4px) rotate(5deg); } }
     .pet-body-wrap { display: block; width: 100%; transform-origin: 50% 100%; animation: petBob 3.2s ease-in-out infinite; }
     @keyframes petBob { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-6px) rotate(1.5deg); } }
     .pet.hop .pet-body-wrap { animation: petHop .55s var(--ease); }
@@ -860,7 +865,7 @@
         </div>
 
         <div class="about__media" data-reveal style="--delay:120ms">
-          <div class="portrait">
+          <div class="portrait" data-pet-say="That's Edwin — aka Toshi! ✨">
             <div class="portrait__glow"></div>
             <!-- EDIT: To use your photo, replace this <svg> placeholder with:
                  <img src="your-photo.jpg" alt="Edwin Ranoco" /> -->
@@ -886,7 +891,7 @@
 
       <div class="skills__cols">
         <!-- EDIT: development skills -->
-        <div class="skill-group dev" data-reveal style="--delay:120ms">
+        <div class="skill-group dev" data-pet-say="Look at all that code! 💻" data-reveal style="--delay:120ms">
           <h3><span class="ic-box"><svg class="ic" aria-hidden="true"><use href="#ic-code"></use></svg></span> Development</h3>
           <div class="tags">
             <span class="tag" data-cursor>HTML</span>
@@ -904,7 +909,7 @@
         </div>
 
         <!-- EDIT: design skills -->
-        <div class="skill-group design" data-reveal style="--delay:200ms">
+        <div class="skill-group design" data-pet-say="He designs too! 🎨" data-reveal style="--delay:200ms">
           <h3><span class="ic-box"><svg class="ic" aria-hidden="true"><use href="#ic-pen"></use></svg></span> Design</h3>
           <div class="tags">
             <span class="tag" data-cursor>Figma</span>
@@ -917,7 +922,7 @@
         </div>
 
         <!-- EDIT: AI tools -->
-        <div class="skill-group tools" data-reveal style="--delay:280ms">
+        <div class="skill-group tools" data-pet-say="AI-powered workflow ⚡" data-reveal style="--delay:280ms">
           <h3><span class="ic-box"><svg class="ic" aria-hidden="true"><use href="#ic-sparkles"></use></svg></span> AI Tools</h3>
           <div class="tags">
             <span class="tag" data-cursor>Claude</span>
@@ -951,7 +956,7 @@
       <div class="projects__track" id="projectsTrack" data-reveal>
 
         <!-- EDIT: project 1 -->
-        <article class="project-card" data-cursor>
+        <article class="project-card" data-cursor data-pet-say="Lumen — slick dashboards 📊">
           <div class="project-card__thumb" style="--c1:#4f8ef7; --c2:#7c3aed;">
             <span class="project-card__num">01</span>
             <span class="project-card__mark" aria-hidden="true">L</span>
@@ -966,7 +971,7 @@
         </article>
 
         <!-- EDIT: project 2 -->
-        <article class="project-card" data-cursor>
+        <article class="project-card" data-cursor data-pet-say="Orbit — smooth travel UX ✈️">
           <div class="project-card__thumb" style="--c1:#7c3aed; --c2:#4f8ef7;">
             <span class="project-card__num">02</span>
             <span class="project-card__mark" aria-hidden="true">O</span>
@@ -981,7 +986,7 @@
         </article>
 
         <!-- EDIT: project 3 -->
-        <article class="project-card" data-cursor>
+        <article class="project-card" data-cursor data-pet-say="Nimbus — pretty weather ⛅">
           <div class="project-card__thumb" style="--c1:#4f8ef7; --c2:#38bdf8;">
             <span class="project-card__num">03</span>
             <span class="project-card__mark" aria-hidden="true">N</span>
@@ -996,7 +1001,7 @@
         </article>
 
         <!-- EDIT: project 4 -->
-        <article class="project-card" data-cursor>
+        <article class="project-card" data-cursor data-pet-say="Folio — a portfolio CMS 🗂️">
           <div class="project-card__thumb" style="--c1:#7c3aed; --c2:#6366f1;">
             <span class="project-card__num">04</span>
             <span class="project-card__mark" aria-hidden="true">F</span>
@@ -1060,7 +1065,7 @@
 
       <!-- EDIT: your email (used in both mailto links below) -->
       <div data-reveal style="--delay:160ms; margin-top:2.5rem">
-        <a href="mailto:toshi.dev26@gmail.com?subject=Let%27s%20work%20together" class="contact__email magnetic" data-cursor>
+        <a href="mailto:toshi.dev26@gmail.com?subject=Let%27s%20work%20together" class="contact__email magnetic" data-cursor data-pet-say="Go on — say hi to Toshi! 💌">
           <svg class="ic" aria-hidden="true"><use href="#ic-mail"></use></svg> toshi.dev26@gmail.com
         </a>
       </div>
@@ -1091,6 +1096,7 @@
 
   <!-- ====================== MASCOT / DESKTOP PET ================= -->
   <button class="pet" id="pet" aria-label="Say hi to Toshi's mascot">
+    <span class="pet-rise" id="petRise">
     <span class="pet-bubble" id="petBubble" aria-hidden="true">Hi there! 👋</span>
     <span class="pet-body-wrap">
       <svg class="pet-svg" viewBox="0 0 120 120" aria-hidden="true">
@@ -1124,6 +1130,7 @@
         <!-- smile -->
         <path d="M52 79 Q60 87 68 79" fill="none" stroke="#0d0d12" stroke-width="3" stroke-linecap="round"/>
       </svg>
+    </span>
     </span>
   </button>
 
@@ -1406,15 +1413,21 @@
     })();
 
     /* ---------------------------------------------------------------
-     * 10. MASCOT — cute pet that pops up, blinks, follows the cursor
+     * 10. MASCOT — roams the bottom, blinks, follows the cursor, and
+     *     strolls over to comment on whatever you hover
      * ------------------------------------------------------------- */
     (function petMascot() {
       const pet = document.getElementById('pet');
       if (!pet) return;
       const bubble = document.getElementById('petBubble');
       const pupils = pet.querySelector('.pet-pupils');
-      const messages = ['Hi there! 👋', 'Like the site?', "Let's build something!", 'Psst… hire Toshi 😎', 'Need a dev?', 'Nice cursor, huh?'];
-      let hideTimer;
+      const idleMsgs = ['Hi there! 👋', 'Like the site?', "Let's build something!", 'Psst… hire Toshi 😎', 'Need a dev?', 'Nice cursor, huh?'];
+
+      let curX = 20, wanderTimer, hideTimer, walkEndTimer, guiding = false;
+      const petW = () => pet.offsetWidth || 92;
+      const maxX = () => Math.max(20, window.innerWidth - petW() - 20);
+      const clampX = (x) => Math.max(20, Math.min(maxX(), x));
+      const rnd = (a) => a[Math.floor(Math.random() * a.length)];
 
       function showBubble(text, ms) {
         if (!bubble) return;
@@ -1423,19 +1436,46 @@
         clearTimeout(hideTimer);
         if (ms) hideTimer = setTimeout(() => bubble.classList.remove('show'), ms);
       }
-      const rnd = () => messages[Math.floor(Math.random() * messages.length)];
 
-      // pop up shortly after load, then greet once
+      // walk the pet to an x position (px from left), facing the way it goes
+      function moveTo(x, speed) {
+        x = clampX(x);
+        const dx = x - curX;
+        if (Math.abs(dx) < 2) return;
+        pet.classList.toggle('face-left', dx < 0);
+        const dur = Math.min(4000, Math.max(450, Math.abs(dx) / (speed || 90) * 1000));
+        pet.style.transitionDuration = (dur / 1000) + 's';
+        curX = x;
+        pet.style.transform = 'translateX(' + x + 'px)';
+        pet.classList.add('walking');
+        clearTimeout(walkEndTimer);
+        walkEndTimer = setTimeout(() => pet.classList.remove('walking'), dur + 60);
+      }
+
+      // gentle autonomous wandering (skipped for reduced-motion users)
+      function scheduleWander(delay) {
+        if (reduceMotion) return;
+        clearTimeout(wanderTimer);
+        wanderTimer = setTimeout(function () {
+          if (!guiding) moveTo(20 + Math.random() * maxX(), 70 + Math.random() * 45);
+          scheduleWander(2600 + Math.random() * 3600);
+        }, delay);
+      }
+
+      // entrance
+      pet.style.transform = 'translateX(' + curX + 'px)';
       setTimeout(() => pet.classList.add('up'), 1200);
-      setTimeout(() => showBubble(messages[0], 3200), 2300);
+      setTimeout(() => showBubble(idleMsgs[0], 3200), 2300);
+      scheduleWander(4200);
 
-      pet.addEventListener('mouseenter', () => showBubble(rnd(), 0));
-      pet.addEventListener('mouseleave', () => { hideTimer = setTimeout(() => bubble && bubble.classList.remove('show'), 200); });
+      // interacting with the pet itself
+      pet.addEventListener('mouseenter', () => showBubble(rnd(idleMsgs), 0));
+      pet.addEventListener('mouseleave', () => { hideTimer = setTimeout(() => bubble && bubble.classList.remove('show'), 220); });
 
       pet.addEventListener('click', () => {
-        showBubble(rnd(), 2600);
+        showBubble(rnd(idleMsgs), 2600);
         if (reduceMotion) return;
-        pet.classList.remove('hop'); void pet.offsetWidth; pet.classList.add('hop'); // restart hop
+        pet.classList.remove('hop'); void pet.offsetWidth; pet.classList.add('hop');
         const palette = ['#4f8ef7', '#7c3aed', '#22d3ee'];
         for (let i = 0; i < 6; i++) {
           const s = document.createElement('span');
@@ -1457,9 +1497,32 @@
           const cx = r.left + r.width * 0.5, cy = r.top + r.height * 0.45;
           const ang = Math.atan2(e.clientY - cy, e.clientX - cx);
           const dist = Math.min(3.2, Math.hypot(e.clientX - cx, e.clientY - cy) / 45);
-          pupils.style.transform = `translate(${Math.cos(ang) * dist}px, ${Math.sin(ang) * dist}px)`;
+          pupils.style.transform = 'translate(' + (Math.cos(ang) * dist) + 'px,' + (Math.sin(ang) * dist) + 'px)';
         }, { passive: true });
       }
+
+      // stroll over to whatever the visitor hovers, and comment on it
+      document.querySelectorAll('[data-pet-say]').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          guiding = true;
+          clearTimeout(wanderTimer);
+          if (!reduceMotion) {
+            const r = el.getBoundingClientRect();
+            moveTo(r.left + r.width / 2 - petW() / 2, 170);
+          }
+          showBubble(el.getAttribute('data-pet-say'), 0);
+        });
+        el.addEventListener('mouseleave', () => {
+          guiding = false;
+          hideTimer = setTimeout(() => bubble && bubble.classList.remove('show'), 400);
+          scheduleWander(1500);
+        });
+      });
+
+      window.addEventListener('resize', () => {
+        curX = clampX(curX);
+        pet.style.transform = 'translateX(' + curX + 'px)';
+      }, { passive: true });
     })();
 
     /* ---------------------------------------------------------------
